@@ -931,6 +931,81 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Back Up data
+
+*MSS*
+
+1.  User requests to back up data
+2.  AddressBook shows that data has been backed up
++
+Use case ends.
+
+[discrete]
+=== Use case: Restore data
+
+*MSS*
+
+1.  User requests to list snapshots of all backups
+2.  AddressBook shows a list of snapshots
+3.  User requests to restore a specific snapshot in the list
+4.  AddressBook is restored to the time and date of the restored backup.
+
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Export data to a directory
+
+*MSS*
+
+1.  User requests to export the data to the directory
+2.  AddressBook shows that the file has been exported
+
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Directory does not exist
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Import data from a directory
+
+*MSS*
+
+1.  User requests to import the data from a directory
+2.  AddressBook shows that the file has been imported
+3.  AddressBook will include the imported data.
+
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Directory does not exist
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
 [appendix]
 == Non Functional Requirements
 
