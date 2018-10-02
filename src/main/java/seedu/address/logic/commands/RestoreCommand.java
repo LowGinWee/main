@@ -1,3 +1,4 @@
+//@@author Limminghong
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.index.Index;
@@ -38,7 +39,7 @@ public class RestoreCommand extends Command {
         FileEncryptor fe = new FileEncryptor("data/addressbook.xml");
 
         if (fe.isLocked()) {
-            throw new CommandException(fe.MESSAGE_ADDRESS_BOOK_LOCKED);
+            throw new CommandException(FileEncryptor.MESSAGE_ADDRESS_BOOK_LOCKED);
         }
 
         if (flag == 1) {
