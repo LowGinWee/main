@@ -7,6 +7,7 @@ import seedu.address.commons.util.FileEncryptor;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CliSyntax;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 
 /**
@@ -18,6 +19,16 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all persons";
 
+    public static String tagString;
+
+    //@@author LowGinWee
+    public ListCommand() {
+    }
+
+    public ListCommand(String tagString) {
+        this.tagString = tagString;
+    }
+    //@@author
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
@@ -26,6 +37,11 @@ public class ListCommand extends Command {
 
         if (fe.isLocked()) {
             throw new CommandException(FileEncryptor.MESSAGE_ADDRESS_BOOK_LOCKED);
+        }
+
+        if (tagString != null) {
+            System.out.println("in list " + tagString);
+            model.listTag(tagString);
         }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

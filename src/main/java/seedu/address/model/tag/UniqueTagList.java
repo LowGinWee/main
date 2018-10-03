@@ -26,7 +26,7 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
  * @see Person#isSamePerson(Person)
  */
 public class UniqueTagList {
-    private final ObservableMap<Tag, UniquePersonList> internalList = FXCollections.observableHashMap();
+    public final ObservableMap<Tag, UniquePersonList> internalList = FXCollections.observableHashMap();
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
@@ -52,14 +52,22 @@ public class UniqueTagList {
      * Adds a person to the list.
      * The person must not already exist in the list.
      */
-    public void add(Tag toAdd, Person person) {
-        requireNonNull(toAdd);
+    //TODO refactor this
+    public void add(Person person) {
         requireNonNull(person);
-//        if (contains(toAdd)) {
-//            throw new DuplicateTagException();
-//        }
-        //TODO check if exist. if not, create new list and push back
-        internalList.put(toAdd, new UniquePersonList());
+        for (Tag tag : person.getTags()) {
+            requireNonNull(tag);
+            if (!contains(tag)) {
+                internalList.put(tag, new UniquePersonList());
+            }
+
+            internalList.get(tag).add(person);
+            //TODO to remove
+            for(Person p : internalList.get(tag)){
+                System.out.println("person with tag " + tag.tagName + " " + p.getName().toString());
+            }
+        }
+
     }
 
     /**
@@ -148,4 +156,7 @@ public class UniqueTagList {
         }
         return true;
     }
+
+
+
 }

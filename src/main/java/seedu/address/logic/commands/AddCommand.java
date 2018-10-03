@@ -79,11 +79,8 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        for (Tag tag : toAdd.getTags()) {
-             if (model.hasTag(tag)){
-                 model.addTag(tag, toAdd);
-             }
-        }
+        model.addTags(toAdd);
+
 
 
 

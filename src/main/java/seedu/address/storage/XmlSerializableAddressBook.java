@@ -53,6 +53,7 @@ public class XmlSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
             addressBook.addPerson(person);
+            addressBook.addTags(person);
         }
         return addressBook;
     }

@@ -110,10 +110,23 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a tag to the address book.
      * The person must not already exist in the address book.
      */
-    public void addTag(Tag tag, Person person) {
-        tags.add(tag, person);
+    public void addTags(Person person) {
+        tags.add(person);
     }
 
+
+    //TODO to put under predicates in listing under model manager
+    public void tagList(String tag){
+        System.out.println("sdfsdfompare " + tag);
+        for (Tag key : tags.internalList.keySet()) {
+            System.out.println(key.tagName + " compare " + tag);
+            if (key.tagName == tag) {
+                for (Person p : tags.internalList.get(key)) {
+                    System.out.println(key.tagName + " " + p.getName());
+                }
+            }
+        }
+    }
     //@@author
 
     //// util methods

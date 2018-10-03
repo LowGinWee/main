@@ -31,7 +31,10 @@ public interface Model {
      * Adds the given person.
      * {@code person} must not already exist in the address book.
      */
-    void addTag(Tag tag, Person person);
+    void addTags(Person person);
+
+    //TODO replace this
+    void listTag(String tag);
     //@@author
 
     /**

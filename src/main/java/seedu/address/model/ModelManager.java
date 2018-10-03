@@ -74,8 +74,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void addTag(Tag tag, Person person) {
-        versionedAddressBook.addTag(tag, person);
+    public void addTags(Person person) {
+        versionedAddressBook.addTags(person);
         //updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -106,6 +106,10 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    public void listTag(String tag){
+        versionedAddressBook.tagList(tag);
     }
 
     //=========== Filtered Person List Accessors =============================================================
