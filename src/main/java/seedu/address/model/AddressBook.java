@@ -6,7 +6,9 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Wraps all data at the address-book level
@@ -15,6 +17,7 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueTagList tags;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -25,6 +28,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        tags = new UniqueTagList();
     }
 
     public AddressBook() {}
@@ -92,6 +96,25 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removePerson(Person key) {
         persons.remove(key);
     }
+
+    //@@author LowGinWee
+    /**
+     * Returns true if the tag already exists in the address book.
+     */
+    public boolean hasTag(Tag tag) {
+        requireNonNull(tag);
+        return tags.contains(tag);
+    }
+
+    /**
+     * Adds a tag to the address book.
+     * The person must not already exist in the address book.
+     */
+    public void addTag(Tag tag, Person person) {
+        tags.add(tag, person);
+    }
+
+    //@@author
 
     //// util methods
 

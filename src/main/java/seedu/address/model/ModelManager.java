@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.autocomplete.CommandCompleter;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -61,6 +62,24 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(versionedAddressBook));
     }
+
+    //@@author LowGinWee
+    /**
+     * Returns true if the tag already exists in the address book.
+     */
+    @Override
+    public boolean hasTag(Tag tag) {
+        requireNonNull(tag);
+        return versionedAddressBook.hasTag(tag);
+    }
+
+    @Override
+    public void addTag(Tag tag, Person person) {
+        versionedAddressBook.addTag(tag, person);
+        //updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+    //@@author
 
     @Override
     public boolean hasPerson(Person person) {

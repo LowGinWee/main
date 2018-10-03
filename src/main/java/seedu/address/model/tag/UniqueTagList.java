@@ -8,8 +8,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.tag.exceptions.DuplicateTagException;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
@@ -24,115 +25,127 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
  *
  * @see Person#isSamePerson(Person)
  */
-public class UniqueTagList implements Iterable<Tag>{
-        private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
+public class UniqueTagList {
+    private final ObservableMap<Tag, UniquePersonList> internalList = FXCollections.observableHashMap();
 
-        /**
-         * Returns true if the list contains an equivalent person as the given argument.
-         */
-        public boolean contains(Tag toCheck) {
-            requireNonNull(toCheck);
-            return internalList.stream().anyMatch(toCheck::equals);
-        }
-
-        /**
-         * Adds a person to the list.
-         * The person must not already exist in the list.
-         */
-        public void add(Tag toAdd) {
-            requireNonNull(toAdd);
-            if (contains(toAdd)) {
-                throw new DuplicateTagException();
-            }
-            internalList.add(toAdd);
-        }
-
-        /**
-         * Replaces the person {@code target} in the list with {@code editedPerson}.
-         * {@code target} must exist in the list.
-         * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
-         */
-        public void setTag(Tag target, Tag editedTag) {
-            requireAllNonNull(target, editedTag);
-
-            int index = internalList.indexOf(target);
-            if (index == -1) {
-                throw new TagNotFoundException();
-            }
-
-            if (!target.equals(editedTag) && contains(editedTag)) {
-                throw new DuplicateTagException();
-            }
-
-            internalList.set(index, editedTag);
-        }
-
-        /**
-         * Removes the equivalent person from the list.
-         * The person must exist in the list.
-         */
-        public void remove(Tag toRemove) {
-            requireNonNull(toRemove);
-            if (!internalList.remove(toRemove)) {
-                throw new TagNotFoundException();
-            }
-        }
-
-        public void setTag(seedu.address.model.tag.UniqueTagList replacement) {
-            requireNonNull(replacement);
-            internalList.setAll(replacement.internalList);
-        }
-
-        /**
-         * Replaces the contents of this list with {@code persons}.
-         * {@code persons} must not contain duplicate persons.
-         */
-        public void setTag(List<Tag> tags) {
-            requireAllNonNull(tags);
-            if (!tagsAreUnique(tags)) {
-                throw new DuplicateTagException();
-            }
-
-            internalList.setAll(tags);
-        }
-
-        /**
-         * Returns the backing list as an unmodifiable {@code ObservableList}.
-         */
-        public ObservableList<Tag> asUnmodifiableObservableList() {
-            return FXCollections.unmodifiableObservableList(internalList);
-        }
-
-        @Override
-        public Iterator<Tag> iterator() {
-            return internalList.iterator();
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            return other == this // short circuit if same object
-                    || (other instanceof seedu.address.model.tag.UniqueTagList // instanceof handles nulls
-                    && internalList.equals(((seedu.address.model.tag.UniqueTagList) other).internalList));
-        }
-
-        @Override
-        public int hashCode() {
-            return internalList.hashCode();
-        }
-
-        /**
-         * Returns true if {@code persons} contains only unique persons.
-         */
-        private boolean tagsAreUnique(List<Tag> tags) {
-            for (int i = 0; i < tags.size() - 1; i++) {
-                for (int j = i + 1; j < tags.size(); j++) {
-                    if (tags.get(i).equals(tags.get(j))) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
+    /**
+     * Returns true if the list contains an equivalent person as the given argument.
+     */
+    public boolean contains(Tag toCheck) {
+        requireNonNull(toCheck);
+        return internalList.containsKey(toCheck);
     }
 
+    /**
+     * Adds a person to the list.
+     * The person must not already exist in the list.
+     */
+    public void add(Tag toAdd) {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateTagException();
+        }
+        internalList.put(toAdd, new UniquePersonList());
+    }
+
+    /**
+     * Adds a person to the list.
+     * The person must not already exist in the list.
+     */
+    public void add(Tag toAdd, Person person) {
+        requireNonNull(toAdd);
+        requireNonNull(person);
+//        if (contains(toAdd)) {
+//            throw new DuplicateTagException();
+//        }
+        //TODO check if exist. if not, create new list and push back
+        internalList.put(toAdd, new UniquePersonList());
+    }
+
+    /**
+     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * {@code target} must exist in the list.
+     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
+     */
+    public void setTag(Tag target, Tag editedTag) {
+        requireAllNonNull(target, editedTag);
+
+        if (!internalList.containsKey(target)) {
+            throw new TagNotFoundException();
+        }
+
+        if (!target.equals(editedTag) && contains(editedTag)) {
+            throw new DuplicateTagException();
+        }
+
+        internalList.put(editedTag, internalList.get(target));
+        internalList.remove(target);
+    }
+
+    /**
+     * Removes the equivalent person from the list.
+     * The person must exist in the list.
+     */
+    public void remove(Tag toRemove) {
+        requireNonNull(toRemove);
+        if (!internalList.containsKey(toRemove)) {
+            throw new TagNotFoundException();
+        }
+        internalList.remove(toRemove);
+    }
+
+    //TODO make this method to replace entire hashmap
+//    public void setTag(seedu.address.model.tag.UniqueTagList replacement) {
+//        requireNonNull(replacement);
+//        internalList.setAll(replacement.internalList);
+//    }
+//
+//    /**
+//     * Replaces the contents of this list with {@code persons}.
+//     * {@code persons} must not contain duplicate persons.
+//     */
+//    public void setTag(List<Tag> tags) {
+//        requireAllNonNull(tags);
+//        if (!tagsAreUnique(tags)) {
+//            throw new DuplicateTagException();
+//        }
+//        internalList.setAll(tags);
+//    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableMap<Tag, UniquePersonList> asUnmodifiableObservableMap() {
+        return FXCollections.unmodifiableObservableMap(internalList);
+    }
+
+    //TODO replace iterate
+//    @Override
+//    public Iterator<Tag> iterator() {
+//        return internalList.iterator();
+//    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof seedu.address.model.tag.UniqueTagList // instanceof handles nulls
+                && internalList.equals(((seedu.address.model.tag.UniqueTagList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
+    }
+
+    /**
+     * Returns true if {@code persons} contains only unique persons.
+     */
+    private boolean tagsAreUnique(List<Tag> tags) {
+        for (Tag tag : tags) {
+            if (internalList.containsKey(tag)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
