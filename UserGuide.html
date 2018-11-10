@@ -391,7 +391,7 @@ Format: <code>find PREFIX KEYWORD [MORE_KEYWORDS]</code></p>
 <p>Persons matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>, <code>Bo Yang</code></p>
 </li>
 <li>
-<p>Finding with a keyword that yields no matches may result in address book displaying all contacts rather than 0 results</p>
+<p>Only one tag at a time can be searched, eg. <code>find t/helloWorld</code> will find tags cotaining <code>helloWorld</code> and <code>find t/helloWorld t/world</code> will find tags containing <code>world</code>. <strong><code>find</code> will only register the last tag entered</strong>.</p>
 </li>
 </ul>
 </div>
@@ -424,8 +424,24 @@ Displays any person who holds a <code>secretary</code> position</p>
 </li>
 <li>
 <p><code>find a/jurong west ave</code><br>
-Displays any person who lives in <code>jurong west ave</code></p>
+Displays any person who lives in <code>jurong</code>, <code>west</code>, <code>ave</code>.</p>
 </li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+To better your experience with search, you should search for specific keywords to get to your results faster. Words such as <code>Jurong</code> would yield closer results compared to <code>Jurong West Ave</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p><code>find k/4.0</code><br>
 Displays any person who has a KPI of <code>4.0</code></p>
@@ -443,6 +459,43 @@ Displays any person who is tagged as <code>friends</code></p>
 Displays any person having names <code>John</code> and <code>Betsy</code> who is a <code>secretary</code> and lives in <code>jurong west ave</code></p>
 </li>
 </ul>
+</div>
+<div class="sect3">
+<h4 id="search-guessing"><a class="link" href="#search-guessing">4.5.1. Search guessing</a></h4>
+<div class="paragraph">
+<p>This feature will also display actual <strong>Keywords matched</strong> and <strong>Keywords guessed</strong> to give you a good indicator of which results were guessed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/find_feature1.png" alt="find feature1" width="400">
+</div>
+</div>
+<div class="paragraph">
+<p>From the above results we can see that <code>Bernicc</code> yields <code>Keywords guessed: {Bernice}</code> whereas <code>Alex</code> yields <code>Keywords matched: {Alex}</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find p/9123</code><br>
+Displays any person having the phone number similar to <code>9123</code> eg. <code>91231231</code>, <code>91231234</code>, and so on.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+To narrow down your searches, try to be more specific in the phone number you wish to search for.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -533,7 +586,7 @@ Selects from the 1st to the 3rd person in the address book.</p>
 Selects from the 1st to the 3rd person and 6th to the 9th person in the address book.</p>
 </li>
 <li>
-<p><code>find Betsy</code><br>
+<p><code>find n/Betsy</code><br>
 <code>select 1</code><br>
 Selects the 1st person in the results of the <code>find</code> command.</p>
 </li>
@@ -741,6 +794,29 @@ All commands will be disabled during encryption, your data will be safely protec
 </li>
 </ul>
 </div>
+<div class="sect4">
+<h5 id="safe-analogy"><a class="link" href="#safe-analogy">Safe analogy</a></h5>
+<div class="imageblock">
+<div class="content">
+<img src="images/safe.png" alt="safe" width="200">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This feature does not actually store passwords. You will have to secure it with a password again after decryption to secure it.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Treat this feature as if it is a <strong>safe</strong>, once you have locked it, you have to remember the password in order to unlock it again.<br>
+And once you have unlocked it, you are free to set a new password.</p>
+</div>
 <div class="paragraph">
 <p>Examples:</p>
 </div>
@@ -755,6 +831,7 @@ Locks addressbook and clears all data.</p>
 Unlocks addressbook and restores all data.</p>
 </li>
 </ul>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1012,6 +1089,11 @@ Secondly, with the all new backup/restore feature, you can backup your address b
 Each column refers to a separate field of the person.<br>
 If a compulsory field is left blank, the address book will not allow the CSV file to be imported.<br></p>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="images/CSV_Format.png" alt="CSV Format" width="790">
+</div>
+</div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
@@ -1024,4 +1106,4 @@ If a compulsory field is left blank, the address book will not allow the CSV fil
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 09:59:03 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 10:06:11 UTC</div></div></div></body></html>
